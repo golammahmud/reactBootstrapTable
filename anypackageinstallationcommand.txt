@@ -1,0 +1,5 @@
+--save --legacy-peer-deps this command last on any npm installations command like
+
+    npm install --save --legacy-peer-deps @angular/material
+   
+    npm i react-bootstrap-table-next --save --legacy-peer-deps
