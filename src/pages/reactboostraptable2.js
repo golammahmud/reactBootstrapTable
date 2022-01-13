@@ -9,6 +9,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import cellEditFactory, {Type} from "react-bootstrap-table2-editor";
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import filterFactory, { textFilter,numberFilter , Comparator ,selectFilter  } from 'react-bootstrap-table2-filter';
+
+
 function Reactboostraptable2() {
   const [show, setShow] = React.useState(false);
   const handleClose = () => setShow(false);
