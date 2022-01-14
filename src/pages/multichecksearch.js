@@ -26,7 +26,7 @@ import overlayFactory from "react-bootstrap-table2-overlay";
 import { useForm } from "react-hook-form";
 import { FaSearch } from "react-icons/fa";
 
-function Filterdata() {
+function MultipleCheckSearch() {
   const {
     register,
     handleSubmit,
@@ -38,20 +38,43 @@ function Filterdata() {
   const mocData = mocdata;
   const [show, setShow] = useState(false);
 
+
   const [searchinput, setSearchInput] = useState("");
   const [output, setOutput] = useState([]);
 
   const colum=Object.keys(mocData[0]);
   console.log(colum);
 
+
+
+
+  //fixed search columns to be displayed
+//   const [searchColumns, setSearchColumns] = useState(["first_name","last_name"]);
+  const [searchColumns, setSearchColumns] = useState([]);
+  const columnsKey=mocData[0] && Object.keys(mocData[0]);
+  console.log(columnsKey);
   const search=(rows)=>{
     const columns=rows[0] && Object.keys(rows[0]);
     return rows.filter((row)=>
-    columns.some((column)=>row[column].toString().toLowerCase().indexOf(searchinput.toLowerCase())>-1)
-    
-    );
-     
+    !searchColumns||!searchColumns.length ? columns.some((column)=>row[column].toString().toLowerCase().indexOf(searchinput.toLowerCase())>-1)
+    : searchColumns.some((column)=>row[column].toString().toLowerCase().indexOf(searchinput.toLowerCase())>-1)
+   
+    );  
   }
+
+
+//   ..................................
+
+
+
+//   const search=(rows)=>{
+//     const columns=rows[0] && Object.keys(rows[0]);
+//     return rows.filter((row)=>
+//     columns.some((column)=>row[column].toString().toLowerCase().indexOf(searchinput.toLowerCase())>-1)
+    
+//     );
+     
+//   }
 
 // const search=(rows) => {
 //   const searchinput = watch("searchinput");
@@ -551,76 +574,6 @@ function Filterdata() {
     expandColumnRenderer: ({ expanded }) => <span>{expanded ? "-" : "+"}</span>,
   };
 
-  // const captions={
-  //   paginationPosition: 'top',
-  //   clearSearch: true,
-  //   clearSearchBtn: true,
-  //   clearSearchBtnStyle: {
-  //     color: 'red',
-  //     backgroundColor: 'yellow',
-  //   },
-  //   clearSearchBtnPosition: 'right',
-  //   clearSearchBtnTooltip: 'Clear Search',
-  //   searchDelayTime: 1000,
-  //   searchPlaceholder: 'Search...',
-  //   searchText: 'Search...',
-  //   searchTooltip: 'Search',
-  //   searchField: 'searchField',
-  //   searchFieldPlaceholder: 'Search...',
-  //   searchFieldTooltip: 'Search Field',
-  //   searchFieldColumnTitle: 'Search Field',
-  //   searchFieldColumnStyle: {
-  //     width: '100px',
-  //   },
-  //   searchFieldColumnClasses: ['text-center'],
-  //   searchFieldColumnAttrs: {
-  //     title: 'Search Field',
-  //   },
-  //   searchFieldColumnFilter: {
-  //     type: 'TextFilter',
-  //     placeholder: 'Search...',
-  //   },
-  //   searchFieldColumnFilterValue: '',
-  //   searchFieldColumnFilterAttrs: {
-  //     placeholder: 'Search...',
-  //   },
-  //   searchFieldColumnFilterRenderer: ({ filter, onChange }) => (
-  //     <input
-  //       type="text"
-  //       onChange={e => onChange(e.target.value)}
-  //       value={filter ? filter.value : ''}
-  //       placeholder="Search..."
-  //     />
-  //   ),
-  //   searchFieldColumnFilterRendererParams: {
-  //     placeholder: 'Search...',
-  //   },
-  //   searchFieldColumnFilterRendererProps: {
-  //     placeholder: 'Search...',
-  //   },
-  //   searchFieldColumnFilterRendererAttrs: {
-  //     placeholder: 'Search...',
-  //   },
-  //   searchFieldColumnFilterRendererStyle: {
-  //     width: '100px',
-  //   },
-  //   searchFieldColumnFilterRendererClasses: ['text-center'],
-  //   searchFieldColumnFilterRendererComponent: ({ filter, onChange }) => (
-  //     <input
-
-  //       type="text"
-  //       onChange={e => onChange(e.target.value)}
-  //       value={filter ? filter.value : ''}
-  //       placeholder="Search..."
-  //     />
-  //   ),
-  //   searchFieldColumnFilterRendererComponentParams: {
-  //     placeholder: 'Search...',
-  //   },
-  //   searchFieldColumnFilterRendererComponentProps: {
-  //     placeholder: 'Search...',
-  //   },
-  // }
 
   const CaptionElement = () => (
     <h3
@@ -663,11 +616,33 @@ function Filterdata() {
               name="search"
             />
           </label>
+ 
           {/* <button type="submit" className="px-1"><FaSearch/></button> */}
           {/* </form> */}
         </div>
+   
       </div>
+      <div className=" justify-center text-center  flex-inline p-3">{columnsKey && columnsKey.map((column)=>{
+             return  <label className="px-3 text-lg font-serif font-bold ml-2">
+                
+             
+                <input
+                type='checkbox'
+                checked={searchColumns.includes(column)}
+                onChange={(e) => {
+                  const checked = searchColumns.includes(column);
+                  setSearchColumns((prev) =>
+                    checked
+                      ? prev.filter((sc) => sc !== column)
+                      : [...prev, column],
+                  );
+                }}
+              />
+                 
+                 {column}</label>
+          })}</div>
       <div>
+          
         <BootstrapTable
           bootstrap4
           expandRow={expandRow}
@@ -768,4 +743,4 @@ function Filterdata() {
   );
 }
 
-export default Filterdata;
+export default MultipleCheckSearch

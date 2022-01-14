@@ -5,6 +5,8 @@ import Reactboostraptable2 from './pages/reactboostraptable2';
 import Toolkit from './pages/toolkitprovider';
 import RemoteTable from './pages/remote';
 import Filterdata from './pages/filterdata';
+import MultipleCheckSearch from "./pages/multichecksearch";
+
  function App() {
   return (
     <div>
@@ -12,7 +14,8 @@ import Filterdata from './pages/filterdata';
       {/* <Reactboostraptable2 /> */}
       {/* <Toolkit /> */}
       {/* <RemoteTable /> */}
-      <Filterdata />
+      {/* <Filterdata /> */}
+      <MultipleCheckSearch />
     </div>
   )
 }
